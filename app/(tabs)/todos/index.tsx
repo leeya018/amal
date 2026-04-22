@@ -90,7 +90,7 @@ const FilterChip = ({ active, label, onPress }: { active: boolean; label: string
     onPress={onPress}
     className={`px-4 py-2 rounded-full border ${active ? "bg-brand-700 border-brand-700" : "bg-white border-brand-100"}`}
   >
-    <Txt variant="caption" className={active ? "text-cream" : "text-ink"}>
+    <Txt variant="caption" tone={active ? "inverse" : "default"}>
       {label}
     </Txt>
   </Pressable>

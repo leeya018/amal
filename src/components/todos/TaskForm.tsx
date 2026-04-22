@@ -73,7 +73,7 @@ export const TaskForm = ({ visible, onSubmit, onClose }: Props) => {
                   onPress={() => setDueDate(null)}
                   className={`px-3 py-2 rounded-full border ${dueDate === null ? "bg-brand-700 border-brand-700" : "bg-white border-brand-100"}`}
                 >
-                  <Txt variant="caption" className={dueDate === null ? "text-cream" : "text-ink"}>
+                  <Txt variant="caption" tone={dueDate === null ? "inverse" : "default"}>
                     {t("todos.noDueDate")}
                   </Txt>
                 </Pressable>
@@ -85,7 +85,7 @@ export const TaskForm = ({ visible, onSubmit, onClose }: Props) => {
                       onPress={() => setDueDate(c.iso)}
                       className={`px-3 py-2 rounded-full border ${active ? "bg-brand-700 border-brand-700" : "bg-white border-brand-100"}`}
                     >
-                      <Txt variant="caption" className={active ? "text-cream" : "text-ink"}>
+                      <Txt variant="caption" tone={active ? "inverse" : "default"}>
                         {c.label}
                       </Txt>
                     </Pressable>

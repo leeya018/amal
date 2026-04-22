@@ -15,7 +15,7 @@ export const ChatBubble = ({ message }: { message: Chat }) => {
       >
         <Txt
           variant="body"
-          className={isUser ? "text-cream" : "text-ink"}
+          tone={isUser ? "inverse" : "default"}
           style={{ textAlign: "right", writingDirection: "rtl" }}
         >
           {message.message_text}
