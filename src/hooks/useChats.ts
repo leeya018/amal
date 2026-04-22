@@ -24,6 +24,12 @@ export const useChats = () => {
 
   useEffect(() => { void refresh(); }, [refresh]);
 
+  const clearAll = useCallback(async () => {
+    if (!session) return;
+    await supabase.from("chats").delete().eq("user_id", session.user.id);
+    setMessages([]);
+  }, [session]);
+
   const send = useCallback(async (text: string): Promise<string> => {
     if (!session || !text.trim()) return "";
     const userRow = {
@@ -54,5 +60,5 @@ export const useChats = () => {
     }
   }, [session, messages]);
 
-  return { messages, loading, thinking, send, refresh };
+  return { messages, loading, thinking, send, refresh, clearAll };
 };

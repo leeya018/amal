@@ -76,6 +76,10 @@
     "extractToTasks": "הוסף למשימות",
     "extracting": "מחפשת משימות...",
     "noActionItems": "לא נמצאו משימות בהודעה הזו.",
+    "newChat": "שיחה חדשה",
+    "newChatConfirmTitle": "להתחיל שיחה חדשה?",
+    "newChatConfirmBody": "כל ההיסטוריה של השיחה הנוכחית תימחק.",
+    "newChatConfirmAction": "מחיקה והתחלה מחדש",
     "actionItems": {
       "title": "משימות מומלצות",
       "body": "על סמך מה ששיתפת, אפשר להוסיף את המשימות האלה:",

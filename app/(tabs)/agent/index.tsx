@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { Txt } from "@/components/ui/Typography";
+import { Touchable } from "@/components/ui/Touchable";
 import { ChatBubble } from "@/components/agent/ChatBubble";
 import { ChatInput } from "@/components/agent/ChatInput";
 import { ActionItemsModal } from "@/components/agent/ActionItemsModal";
@@ -12,9 +13,13 @@ import { useTodos } from "@/hooks/useTodos";
 import { extractActionItems, type ActionItem } from "@/lib/gemini";
 import type { Chat } from "@/types/app";
 
+// Tab bar is absolute-positioned (height 84) in app/(tabs)/_layout.tsx,
+// so content sitting at the bottom of this screen is hidden underneath it.
+const TAB_BAR_HEIGHT = 84;
+
 export default function AgentScreen() {
   const { t } = useTranslation();
-  const { messages, thinking, send } = useChats();
+  const { messages, thinking, send, clearAll } = useChats();
   const { createMany } = useTodos();
   const listRef = useRef<FlatList>(null);
   const [actionItems,         setActionItems]         = useState<ActionItem[]>([]);
@@ -52,6 +57,28 @@ export default function AgentScreen() {
     setModalVisible(false);
   };
 
+  const handleNewChat = () => {
+    if (messages.length === 0) return;
+    Alert.alert(
+      t("agent.newChatConfirmTitle"),
+      t("agent.newChatConfirmBody"),
+      [
+        { text: t("common.cancel"), style: "cancel" },
+        {
+          text: t("agent.newChatConfirmAction"),
+          style: "destructive",
+          onPress: async () => {
+            try {
+              await clearAll();
+            } catch {
+              Alert.alert(t("agent.title"), t("errors.generic"));
+            }
+          },
+        },
+      ],
+    );
+  };
+
   const handleExtract = async (message: Chat) => {
     if (extractingMessageId) return;
     setExtractingMessageId(message.id);
@@ -76,10 +103,24 @@ export default function AgentScreen() {
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-cream">
-      <View className="px-6 pt-2 pb-4">
+      <View className="px-6 pt-2 pb-4 flex-row-reverse items-center justify-between">
         <Txt variant="title" className="text-ink" style={{ textAlign: "right" }}>
           {t("agent.title")}
         </Txt>
+        <Touchable
+          onPress={handleNewChat}
+          disabled={messages.length === 0}
+          accessibilityRole="button"
+          accessibilityLabel={t("agent.newChat")}
+          className={`flex-row-reverse items-center gap-1.5 px-3.5 py-2 rounded-full bg-white shadow-md shadow-black/5 ${
+            messages.length === 0 ? "opacity-40" : ""
+          }`}
+        >
+          <Ionicons name="create-outline" size={16} color="#007AFF" />
+          <Txt variant="caption" tone="accent" style={{ fontFamily: "Rubik_500Medium" }}>
+            {t("agent.newChat")}
+          </Txt>
+        </Touchable>
       </View>
 
       <KeyboardAvoidingView
@@ -122,7 +163,9 @@ export default function AgentScreen() {
           }
         />
 
-        <ChatInput onSend={handleSend} disabled={thinking} />
+        <View style={{ marginBottom: TAB_BAR_HEIGHT }}>
+          <ChatInput onSend={handleSend} disabled={thinking} />
+        </View>
       </KeyboardAvoidingView>
 
       <ActionItemsModal
