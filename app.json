@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "Amal",
+    "slug": "amal",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "amal",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.amal.app",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "אמאל זקוקה לגישה למיקרופון כדי להקליט ראיות של אירועי מצוקה.",
+        "NSLocationWhenInUseUsageDescription": "אמאל משתפת את מיקומך יחד עם ההקלטה כדי לתעד את האירוע.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "אמאל משתפת את מיקומך יחד עם ההקלטה כדי לתעד את האירוע."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#2E1A2E"
+      },
+      "package": "com.amal.app",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-av",
+        {
+          "microphonePermission": "אמאל זקוקה לגישה למיקרופון כדי להקליט ראיות."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "אמאל משתפת את מיקומך יחד עם ההקלטה."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

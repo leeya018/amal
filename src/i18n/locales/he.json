@@ -1,0 +1,103 @@
+{
+  "common": {
+    "appName": "אמאל",
+    "tagline": "יחד. בטוחה. חזקה.",
+    "loading": "טוען...",
+    "cancel": "ביטול",
+    "save": "שמירה",
+    "delete": "מחיקה",
+    "confirm": "אישור",
+    "continue": "המשך",
+    "back": "חזרה",
+    "done": "סיום",
+    "skip": "דלג"
+  },
+  "onboarding": {
+    "intro": {
+      "slide1Title": "אנחנו כאן",
+      "slide1Body": "מרחב בטוח שתוכל לסמוך עליו - בכל רגע, בכל מצב.",
+      "slide2Title": "הקלטה מאובטחת",
+      "slide2Body": "הקלטות חתומות בשרת ובלתי ניתנות לזיוף, זמינות רק לך.",
+      "slide3Title": "עוזרת אישית",
+      "slide3Body": "בינה מלאכותית בעברית שמקשיבה, מכוונת ומארגנת את הצעדים הבאים."
+    },
+    "video": {
+      "title": "דקה אחת - והכל ברור",
+      "body": "סרטון קצר שמסביר איך להשתמש באמאל בזמן חירום.",
+      "cta": "הבנתי, קדימה"
+    },
+    "login": {
+      "title": "ברוכה השבה",
+      "emailLabel": "אימייל",
+      "passwordLabel": "סיסמה",
+      "submit": "כניסה",
+      "noAccount": "אין לך חשבון?",
+      "goRegister": "להרשמה"
+    },
+    "register": {
+      "title": "יצירת חשבון",
+      "emailLabel": "אימייל",
+      "passwordLabel": "סיסמה",
+      "submit": "הרשמה",
+      "hasAccount": "יש לך כבר חשבון?",
+      "goLogin": "לכניסה"
+    }
+  },
+  "tabs": {
+    "sos": "SOS",
+    "agent": "עוזרת",
+    "todos": "משימות"
+  },
+  "sos": {
+    "idleTitle": "הקש להקלטה",
+    "idleHint": "ההקלטה תישמר בצורה מאובטחת עם חתימת שרת וקואורדינטות מיקום.",
+    "recording": "מקליטה...",
+    "stop": "עצירה",
+    "saving": "שומרת...",
+    "savedTitle": "נשמר בהצלחה",
+    "savedBody": "ההקלטה חתומה ומוכנה לשימוש עתידי.",
+    "viewRecordings": "ההקלטות שלי",
+    "recordingsTitle": "ההקלטות שלי",
+    "empty": "אין הקלטות עדיין.",
+    "play": "השמעה",
+    "stopPlayback": "עצירה",
+    "confirmDelete": "למחוק את ההקלטה?",
+    "signatureVerified": "חתימת שרת תקינה",
+    "locationOff": "מיקום לא זמין"
+  },
+  "agent": {
+    "title": "עוזרת אמאל",
+    "greeting": "שלום. אני כאן בשבילך. במה אוכל לעזור?",
+    "inputPlaceholder": "כתבי הודעה...",
+    "send": "שליחה",
+    "recordVoice": "הקלטת קול",
+    "transcribing": "מתמללת...",
+    "thinking": "חושבת...",
+    "actionItems": {
+      "title": "משימות מומלצות",
+      "body": "על סמך מה ששיתפת, אפשר להוסיף את המשימות האלה:",
+      "addAll": "הוספה לרשימה",
+      "dismiss": "לא עכשיו"
+    }
+  },
+  "todos": {
+    "title": "המשימות שלי",
+    "newTask": "משימה חדשה",
+    "titleLabel": "כותרת",
+    "descriptionLabel": "תיאור",
+    "dueDateLabel": "תאריך יעד",
+    "noDueDate": "בלי תאריך יעד",
+    "allTasks": "כל המשימות",
+    "today": "היום",
+    "empty": "אין משימות. נשום עמוק.",
+    "markDone": "סמני כבוצעה",
+    "markUndone": "החזרי לפעילה"
+  },
+  "errors": {
+    "generic": "משהו השתבש. נסי שוב.",
+    "permissionMic": "לא ניתנה הרשאה למיקרופון.",
+    "permissionLocation": "לא ניתנה הרשאה למיקום.",
+    "authFailed": "לא הצלחנו להתחבר. בדקי את הפרטים.",
+    "signFailed": "נכשלה חתימת ההקלטה."
+  }
+}
