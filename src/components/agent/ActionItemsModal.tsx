@@ -15,8 +15,9 @@ export const ActionItemsModal = ({ visible, items, onAddAll, onDismiss }: Props)
   const { t } = useTranslation();
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onDismiss}>
-      <Pressable onPress={onDismiss} className="flex-1 bg-black/40 justify-end">
-        <Pressable onPress={(e) => e.stopPropagation()} className="bg-cream rounded-t-[32px] p-6 pb-10 shadow-2xl shadow-black/20">
+      <View className="flex-1 justify-end">
+        <Pressable onPress={onDismiss} className="absolute inset-0 bg-black/40" />
+        <View className="bg-cream rounded-t-[32px] p-6 pb-10 shadow-2xl shadow-black/20 max-h-[85%]">
           <View className="self-center w-10 h-1 rounded-full bg-ink-faint/40 mb-5" />
           <Txt variant="title" className="mb-1 text-ink" style={{ textAlign: "right" }}>
             {t("agent.actionItems.title")}
@@ -25,7 +26,11 @@ export const ActionItemsModal = ({ visible, items, onAddAll, onDismiss }: Props)
             {t("agent.actionItems.body")}
           </Txt>
 
-          <ScrollView className="max-h-[320px] mb-5">
+          <ScrollView
+            className="shrink mb-5"
+            contentContainerStyle={{ paddingBottom: 4 }}
+            showsVerticalScrollIndicator
+          >
             {items.map((item, idx) => (
               <View key={idx} className="bg-white rounded-[22px] p-4 mb-2 shadow-md shadow-black/5">
                 <Txt variant="heading" className="text-ink" style={{ textAlign: "right" }}>{item.title}</Txt>
@@ -42,8 +47,8 @@ export const ActionItemsModal = ({ visible, items, onAddAll, onDismiss }: Props)
             <Button label={t("agent.actionItems.addAll")} onPress={onAddAll} fullWidth size="lg" />
             <Button label={t("agent.actionItems.dismiss")} variant="ghost" onPress={onDismiss} fullWidth />
           </View>
-        </Pressable>
-      </Pressable>
+        </View>
+      </View>
     </Modal>
   );
 };
