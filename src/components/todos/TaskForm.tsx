@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal, Pressable, ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Txt } from "@/components/ui/Typography";
 import { Input } from "@/components/ui/Input";
@@ -46,8 +46,12 @@ export const TaskForm = ({ visible, onSubmit, onClose }: Props) => {
 
   return (
     <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
-      <Pressable onPress={onClose} className="flex-1 bg-black/50 justify-end">
-        <Pressable onPress={(e) => e.stopPropagation()} className="bg-cream rounded-t-3xl p-6 pb-10">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <Pressable onPress={onClose} className="flex-1 bg-black/50 justify-end">
+          <Pressable onPress={(e) => e.stopPropagation()} className="bg-cream rounded-t-3xl p-6 pb-10">
           <View className="self-center w-12 h-1 rounded-full bg-brand-100 mb-4" />
           <Txt variant="title" className="mb-4" style={{ textAlign: "right" }}>
             {t("todos.newTask")}
@@ -95,12 +99,13 @@ export const TaskForm = ({ visible, onSubmit, onClose }: Props) => {
             </View>
           </View>
 
-          <View className="gap-2 mt-6">
-            <Button label={t("common.save")}   onPress={handleSubmit} fullWidth size="lg" disabled={!title.trim()} />
-            <Button label={t("common.cancel")} variant="ghost" onPress={onClose} fullWidth />
-          </View>
+            <View className="gap-2 mt-6">
+              <Button label={t("common.save")}   onPress={handleSubmit} fullWidth size="lg" disabled={!title.trim()} />
+              <Button label={t("common.cancel")} variant="ghost" onPress={onClose} fullWidth />
+            </View>
+          </Pressable>
         </Pressable>
-      </Pressable>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };

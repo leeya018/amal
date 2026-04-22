@@ -9,14 +9,16 @@ import { ActionItemsModal } from "@/components/agent/ActionItemsModal";
 import { useChats } from "@/hooks/useChats";
 import { useTodos } from "@/hooks/useTodos";
 import { extractActionItems, type ActionItem } from "@/lib/gemini";
+import type { Chat } from "@/types/app";
 
 export default function AgentScreen() {
   const { t } = useTranslation();
   const { messages, thinking, send } = useChats();
   const { createMany } = useTodos();
   const listRef = useRef<FlatList>(null);
-  const [actionItems,   setActionItems]   = useState<ActionItem[]>([]);
-  const [modalVisible,  setModalVisible]  = useState(false);
+  const [actionItems,         setActionItems]         = useState<ActionItem[]>([]);
+  const [modalVisible,        setModalVisible]        = useState(false);
+  const [extractingMessageId, setExtractingMessageId] = useState<string | null>(null);
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -49,6 +51,26 @@ export default function AgentScreen() {
     setModalVisible(false);
   };
 
+  const handleExtract = async (message: Chat) => {
+    if (extractingMessageId) return;
+    setExtractingMessageId(message.id);
+    try {
+      const items = await extractActionItems(message.message_text);
+      if (items.length === 0) {
+        Alert.alert(t("agent.title"), t("agent.noActionItems"));
+        return;
+      }
+      setActionItems(items);
+      setModalVisible(true);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      const key = /\[(429|503)\b/.test(msg) ? "errors.aiBusy" : "errors.generic";
+      Alert.alert(t("agent.title"), t(key));
+    } finally {
+      setExtractingMessageId(null);
+    }
+  };
+
   const showGreeting = messages.length === 0 && !thinking;
 
   return (
@@ -78,7 +100,13 @@ export default function AgentScreen() {
               </View>
             ) : null
           }
-          renderItem={({ item }) => <ChatBubble message={item} />}
+          renderItem={({ item }) => (
+            <ChatBubble
+              message={item}
+              onExtract={handleExtract}
+              extracting={extractingMessageId === item.id}
+            />
+          )}
           ListFooterComponent={
             thinking ? (
               <View className="flex-row justify-end mb-2">

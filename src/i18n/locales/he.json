@@ -73,6 +73,9 @@
     "recordVoice": "הקלטת קול",
     "transcribing": "מתמללת...",
     "thinking": "חושבת...",
+    "extractToTasks": "הוסף למשימות",
+    "extracting": "מחפשת משימות...",
+    "noActionItems": "לא נמצאו משימות בהודעה הזו.",
     "actionItems": {
       "title": "משימות מומלצות",
       "body": "על סמך מה ששיתפת, אפשר להוסיף את המשימות האלה:",

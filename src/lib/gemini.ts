@@ -45,12 +45,12 @@ export const askGemini = async (history: ChatTurn[], userMessage: string): Promi
 
 export type ActionItem = { title: string; description?: string };
 
-const ACTION_EXTRACTION_PROMPT = `נתח את ההודעה הבאה ממשתמשת וזהה משימות מעשיות שהיא צריכה לבצע.
+const ACTION_EXTRACTION_PROMPT = `נתח את הטקסט הבא וזהה משימות מעשיות שעל המשתמשת לבצע.
 החזר JSON תקין בלבד, ללא הסברים, בצורה הבאה:
 {"items": [{"title": "כותרת קצרה", "description": "פירוט קצר או ריק"}]}
 אם אין משימות מעשיות, החזר {"items": []}.
 
-הודעה:
+טקסט:
 `;
 
 export const extractActionItems = async (text: string): Promise<ActionItem[]> => {
