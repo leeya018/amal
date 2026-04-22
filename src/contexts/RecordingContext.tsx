@@ -111,14 +111,32 @@ export const RecordingProvider = ({ children }: { children: ReactNode }) => {
       });
       const bytes = decodeBase64(base64);
 
+      console.log("[sos] upload start", filePath);
       const { error: uploadErr } = await supabase.storage
         .from(config.storage.recordingsBucket)
         .upload(filePath, bytes, { contentType: "audio/m4a", upsert: false });
-      if (uploadErr) throw uploadErr;
+      if (uploadErr) { console.log("[sos] upload error", uploadErr); throw uploadErr; }
+      console.log("[sos] upload ok");
 
       const sha256 = await hashFile(uri);
+      console.log("[sos] sha256", sha256.slice(0, 12));
       const created_at = new Date().toISOString();
-      const signature = await signRecording({ file_path: filePath, sha256, created_at });
+
+      const sess = await supabase.auth.getSession();
+      console.log("[sos] session present?", !!sess.data.session, "token_head", sess.data.session?.access_token?.slice(0, 20));
+
+      let signature: string;
+      try {
+        signature = await signRecording({ file_path: filePath, sha256, created_at });
+        console.log("[sos] signRecording ok");
+      } catch (signErr: any) {
+        console.log("[sos] signRecording threw", signErr?.name, signErr?.message);
+        if (signErr?.context?.status) console.log("[sos] fn status", signErr.context.status);
+        if (typeof signErr?.context?.json === "function") {
+          try { console.log("[sos] fn body", await signErr.context.json()); } catch {}
+        }
+        throw signErr;
+      }
 
       const { error: insertErr } = await supabase.from("recordings").insert({
         user_id:   session.user.id,

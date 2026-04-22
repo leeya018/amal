@@ -1,6 +1,7 @@
+import { useCallback } from "react";
 import { FlatList, Pressable, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router, Stack } from "expo-router";
+import { router, Stack, useFocusEffect } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { Txt } from "@/components/ui/Typography";
@@ -10,6 +11,8 @@ import { useRecordings } from "@/hooks/useRecordings";
 export default function RecordingsScreen() {
   const { t } = useTranslation();
   const { items, loading, remove, getSignedUrl, refresh } = useRecordings();
+
+  useFocusEffect(useCallback(() => { void refresh(); }, [refresh]));
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-cream">

@@ -12,15 +12,19 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
 
   const authHeader = req.headers.get("Authorization");
-  if (!authHeader) return json({ error: "Unauthorized" }, 401);
+  if (!authHeader) return json({ error: "Unauthorized", reason: "no-auth-header" }, 401);
 
+  const token = authHeader.replace(/^Bearer\s+/i, "");
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,
     Deno.env.get("SUPABASE_ANON_KEY")!,
     { global: { headers: { Authorization: authHeader } } }
   );
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return json({ error: "Unauthorized" }, 401);
+  const { data: { user }, error: userErr } = await supabase.auth.getUser(token);
+  if (userErr || !user) {
+    console.error("getUser failed", userErr);
+    return json({ error: "Unauthorized", reason: userErr?.message ?? "no-user" }, 401);
+  }
 
   let payload: { file_path?: string; sha256?: string; created_at?: string };
   try {

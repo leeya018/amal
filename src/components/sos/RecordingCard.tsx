@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Pressable, View } from "react-native";
 import { Audio } from "expo-av";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,29 +15,48 @@ type Props = {
 
 export const RecordingCard = ({ recording, onGetSignedUrl, onDelete }: Props) => {
   const { t } = useTranslation();
-  const [sound, setSound] = useState<Audio.Sound | null>(null);
+  const soundRef = useRef<Audio.Sound | null>(null);
   const [playing, setPlaying] = useState(false);
 
+  useEffect(() => () => {
+    soundRef.current?.unloadAsync().catch(() => {});
+    soundRef.current = null;
+  }, []);
+
   const toggle = useCallback(async () => {
-    if (sound && playing) {
-      await sound.pauseAsync();
-      setPlaying(false);
-      return;
+    const current = soundRef.current;
+
+    if (current) {
+      const status = await current.getStatusAsync();
+      if (status.isLoaded) {
+        if (playing) {
+          await current.pauseAsync();
+          setPlaying(false);
+          return;
+        }
+        // Paused mid-track or ended — if ended, rewind before playing.
+        const atEnd =
+          status.didJustFinish ||
+          (status.durationMillis != null && status.positionMillis >= status.durationMillis);
+        if (atEnd) await current.setPositionAsync(0);
+        await current.playAsync();
+        setPlaying(true);
+        return;
+      }
+      soundRef.current = null;
     }
-    if (sound && !playing) {
-      await sound.playAsync();
-      setPlaying(true);
-      return;
-    }
+
+    // Silent-mode on iOS blocks playback unless this is set explicitly.
+    await Audio.setAudioModeAsync({ playsInSilentModeIOS: true, allowsRecordingIOS: false });
     const url = await onGetSignedUrl(recording.file_path);
     if (!url) return;
-    const { sound: s } = await Audio.Sound.createAsync({ uri: url }, { shouldPlay: true });
-    s.setOnPlaybackStatusUpdate((status) => {
-      if (status.isLoaded && status.didJustFinish) setPlaying(false);
+    const { sound } = await Audio.Sound.createAsync({ uri: url }, { shouldPlay: true });
+    sound.setOnPlaybackStatusUpdate((st) => {
+      if (st.isLoaded && st.didJustFinish) setPlaying(false);
     });
-    setSound(s);
+    soundRef.current = sound;
     setPlaying(true);
-  }, [sound, playing, onGetSignedUrl, recording.file_path]);
+  }, [playing, onGetSignedUrl, recording.file_path]);
 
   const when = new Date(recording.created_at).toLocaleString("he-IL", {
     day: "2-digit", month: "2-digit", year: "numeric",
