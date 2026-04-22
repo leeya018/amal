@@ -1,10 +1,18 @@
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { RecordingProvider } from "@/contexts/RecordingContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function TabsLayout() {
   const { t } = useTranslation();
+  const { session, loading } = useAuth();
+
+  // Sign-out only clears AuthContext.session — without this guard the user stays
+  // stuck inside the tabs group after logout. Re-routing here unmounts the tabs
+  // subtree and sends them back through the onboarding flow.
+  if (loading) return null;
+  if (!session) return <Redirect href="/onboarding/intro" />;
 
   return (
     <RecordingProvider>
