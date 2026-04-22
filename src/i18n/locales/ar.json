@@ -1,0 +1,101 @@
+{
+  "onboarding": {
+    "selectLanguage": "اختاري لغتك",
+    "continue": "متابعة",
+    "intro": {
+      "slide1": {
+        "title": "مرحباً بكِ في أمل",
+        "body": "تطبيقكِ الآمن — للتوثيق والدعم والأمان."
+      },
+      "slide2": {
+        "title": "تسجيل آمن",
+        "body": "كل تسجيل محمي بتوقيع تشفيري وموقع GPS."
+      },
+      "slide3": {
+        "title": "مساعد AI متعاطف",
+        "body": "وكيلة ذكاء اصطناعي تستمع وتساعد وترافقكِ في أي وقت."
+      }
+    },
+    "video": {
+      "title": "كيف يعمل",
+      "skip": "تخطي"
+    }
+  },
+  "auth": {
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "loginTitle": "مرحباً بعودتكِ",
+    "registerTitle": "إنشاء حساب جديد",
+    "noAccount": "ليس لديكِ حساب؟ سجلي الآن",
+    "haveAccount": "لديكِ حساب؟ سجلي دخولك",
+    "forgotPassword": "نسيتِ كلمة المرور؟",
+    "emailPlaceholder": "your@email.com",
+    "passwordPlaceholder": "8 أحرف على الأقل",
+    "namePlaceholder": "اسمكِ",
+    "name": "الاسم",
+    "loading": "جارٍ التحميل...",
+    "errorGeneral": "حدث خطأ. حاولي مجدداً."
+  },
+  "sos": {
+    "tabTitle": "طوارئ",
+    "recordStart": "اضغطي لبدء التسجيل",
+    "recordStop": "اضغطي للإيقاف",
+    "recording": "جارٍ التسجيل...",
+    "uploading": "جارٍ الحفظ...",
+    "uploadSuccess": "تم حفظ التسجيل بأمان",
+    "uploadError": "خطأ في الحفظ. حاولي مجدداً.",
+    "myRecordings": "تسجيلاتي",
+    "location": "الموقع",
+    "timestamp": "الطابع الزمني",
+    "blockHash": "تجزئة البلوك تشين",
+    "hash": "التوقيع",
+    "noRecordings": "لا توجد تسجيلات بعد",
+    "play": "تشغيل",
+    "stop": "إيقاف",
+    "details": "التفاصيل",
+    "verified": "تم التحقق",
+    "duration": "المدة",
+    "permissionAudio": "مطلوب إذن الميكروفون",
+    "permissionLocation": "مطلوب إذن الموقع",
+    "seconds": "ثانية"
+  },
+  "agent": {
+    "tabTitle": "المساعد",
+    "placeholder": "اكتبي رسالة...",
+    "voiceHint": "اضغطي لتسجيل صوتي",
+    "extractTodos": "استخرجي المهام",
+    "thinking": "أفكر...",
+    "transcribing": "جارٍ النسخ...",
+    "errorGemini": "خطأ في الإرسال. حاولي مجدداً.",
+    "errorWhisper": "خطأ في النسخ. حاولي مجدداً.",
+    "addedToTodos": "تمت إضافة المهام!",
+    "noActionItems": "لم يتم العثور على مهام في هذه الرسالة."
+  },
+  "todos": {
+    "tabTitle": "المهام",
+    "addTask": "إضافة مهمة",
+    "editTask": "تعديل المهمة",
+    "title": "العنوان",
+    "description": "الوصف",
+    "dueDate": "تاريخ الاستحقاق",
+    "completed": "مكتملة",
+    "noTasks": "لا توجد مهام لهذا اليوم",
+    "noTasksAll": "لا توجد مهام بعد",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "list": "قائمة",
+    "calendar": "التقويم",
+    "titlePlaceholder": "اسم المهمة",
+    "descriptionPlaceholder": "تفاصيل إضافية (اختياري)"
+  },
+  "common": {
+    "error": "خطأ",
+    "close": "إغلاق",
+    "back": "رجوع",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج"
+  }
+}
