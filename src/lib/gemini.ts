@@ -3,6 +3,24 @@ import { config } from "@/constants/config";
 
 const genAI = new GoogleGenerativeAI(config.gemini.apiKey);
 
+const isTransient = (err: unknown): boolean => {
+  const msg = err instanceof Error ? err.message : String(err);
+  return /\[(429|503)\b/.test(msg);
+};
+
+const withRetry = async <T>(fn: () => Promise<T>, attempts = 3): Promise<T> => {
+  for (let i = 0; i < attempts; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (!isTransient(err) || i === attempts - 1) throw err;
+      const delay = 600 * 2 ** i + Math.random() * 200;
+      await new Promise((r) => setTimeout(r, delay));
+    }
+  }
+  throw new Error("unreachable");
+};
+
 const SYSTEM_INSTRUCTION = `את עוזרת אישית של אפליקציית "אמאל" - אפליקציית בטיחות לנשים.
 תפקידך לספק תמיכה רגשית, מידע, והכוונה לנשים שעברו או עוברות אירועי מצוקה.
 ענה תמיד בעברית, בטון חם, אמפתי וברור.
@@ -21,7 +39,7 @@ export const askGemini = async (history: ChatTurn[], userMessage: string): Promi
     history: history.map((t) => ({ role: t.role, parts: [{ text: t.text }] })),
   });
 
-  const result = await chat.sendMessage(userMessage);
+  const result = await withRetry(() => chat.sendMessage(userMessage));
   return result.response.text();
 };
 
@@ -37,7 +55,7 @@ const ACTION_EXTRACTION_PROMPT = `נתח את ההודעה הבאה ממשתמש
 
 export const extractActionItems = async (text: string): Promise<ActionItem[]> => {
   const model = genAI.getGenerativeModel({ model: config.gemini.model });
-  const result = await model.generateContent(ACTION_EXTRACTION_PROMPT + text);
+  const result = await withRetry(() => model.generateContent(ACTION_EXTRACTION_PROMPT + text));
   const raw = result.response.text().trim();
   const cleaned = raw.replace(/^```json\s*/i, "").replace(/```$/, "").trim();
   try {

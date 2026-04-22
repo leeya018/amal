@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { FlatList, KeyboardAvoidingView, Platform, View } from "react-native";
+import { Alert, FlatList, KeyboardAvoidingView, Platform, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { Txt } from "@/components/ui/Typography";
@@ -25,11 +25,17 @@ export default function AgentScreen() {
   }, [messages.length]);
 
   const handleSend = async (text: string) => {
-    await send(text);
-    const items = await extractActionItems(text);
-    if (items.length > 0) {
-      setActionItems(items);
-      setModalVisible(true);
+    try {
+      await send(text);
+      const items = await extractActionItems(text);
+      if (items.length > 0) {
+        setActionItems(items);
+        setModalVisible(true);
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      const key = /\[(429|503)\b/.test(msg) ? "errors.aiBusy" : "errors.generic";
+      Alert.alert(t("agent.title"), t(key));
     }
   };
 

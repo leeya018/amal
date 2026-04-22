@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Amal is an Expo (SDK 54) / React Native 0.81 app — a Hebrew-only safety app for women. It has three features, one per tab:
 
 - **SOS** (`app/(tabs)/sos`): one-tap audio recording with location, uploaded to Supabase Storage and HMAC-signed for tamper-evidence.
-- **Agent** (`app/(tabs)/agent`): Hebrew chat with Gemini (`gemini-1.5-flash`). Can extract action items from a message and bulk-create them as todos.
+- **Agent** (`app/(tabs)/agent`): Hebrew chat with Gemini (`gemini-2.5-flash`). Can extract action items from a message and bulk-create them as todos.
 - **Todos** (`app/(tabs)/todos`): personal task list (title, description, due date, completed).
 
 The app is Hebrew-only and RTL is force-enabled at startup via `enforceRTL()` in [app/_layout.tsx](app/_layout.tsx). Text and i18n keys live in [src/i18n/locales/he.json](src/i18n/locales/he.json) — no English locale file is intended.

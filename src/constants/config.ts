@@ -10,7 +10,7 @@ export const config = {
   },
   gemini: {
     apiKey: required("EXPO_PUBLIC_GEMINI_API_KEY", process.env.EXPO_PUBLIC_GEMINI_API_KEY),
-    model:  "gemini-1.5-flash",
+    model:  "gemini-2.5-flash",
   },
   openai: {
     apiKey: required("EXPO_PUBLIC_OPENAI_API_KEY", process.env.EXPO_PUBLIC_OPENAI_API_KEY),
