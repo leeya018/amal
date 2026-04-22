@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import { Audio } from "expo-av";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { Txt } from "@/components/ui/Typography";
-import { Card } from "@/components/ui/Card";
+import { Touchable } from "@/components/ui/Touchable";
 import type { Recording } from "@/types/app";
 
 type Props = {
-  recording: Recording;
-  onGetSignedUrl: (filePath: string) => Promise<string | null>;
-  onDelete:       (recording: Recording) => void;
+  recording:       Recording;
+  onGetSignedUrl:  (filePath: string) => Promise<string | null>;
+  onDelete:        (recording: Recording) => void;
 };
 
 export const RecordingCard = ({ recording, onGetSignedUrl, onDelete }: Props) => {
@@ -62,33 +62,36 @@ export const RecordingCard = ({ recording, onGetSignedUrl, onDelete }: Props) =>
     day: "2-digit", month: "2-digit", year: "numeric",
     hour: "2-digit", minute: "2-digit",
   });
-  const hasLocation = recording.lat != null && recording.long != null;
+  const hasLocation  = recording.lat != null && recording.long != null;
   const hasSignature = !!recording.signature;
 
   return (
-    <Card className="mb-3">
+    <View className="bg-white rounded-[28px] p-4 mb-3 shadow-lg shadow-black/5">
       <View className="flex-row-reverse items-center justify-between">
-        <Pressable
+        <Touchable
           onPress={toggle}
           accessibilityRole="button"
           accessibilityLabel={playing ? t("sos.stopPlayback") : t("sos.play")}
-          className="w-12 h-12 rounded-full bg-accent-400 items-center justify-center active:opacity-80"
+          className={`w-12 h-12 rounded-full items-center justify-center shadow-lg ${
+            playing ? "bg-danger shadow-danger/40" : "bg-accent-500 shadow-accent-500/40"
+          }`}
+          scaleTo={0.92}
         >
-          <Ionicons name={playing ? "pause" : "play"} size={22} color="#FAF5F0" />
-        </Pressable>
+          <Ionicons name={playing ? "pause" : "play"} size={20} color="#FFFFFF" style={!playing ? { marginStart: 2 } : undefined} />
+        </Touchable>
 
         <View className="flex-1 ms-3">
           <Txt variant="label" className="text-ink">{when}</Txt>
-          <View className="flex-row-reverse items-center gap-3 mt-1">
+          <View className="flex-row-reverse items-center gap-3 mt-1.5">
             {hasSignature ? (
               <View className="flex-row-reverse items-center gap-1">
-                <Ionicons name="shield-checkmark" size={14} color="#5F7F3A" />
+                <Ionicons name="shield-checkmark" size={13} color="#34C759" />
                 <Txt variant="caption" tone="muted">{t("sos.signatureVerified")}</Txt>
               </View>
             ) : null}
             {hasLocation ? (
               <View className="flex-row-reverse items-center gap-1">
-                <Ionicons name="location" size={14} color="#6B5C66" />
+                <Ionicons name="location" size={13} color="#8E8E93" />
                 <Txt variant="caption" tone="muted" style={{ writingDirection: "ltr" }}>
                   {recording.lat!.toFixed(3)}, {recording.long!.toFixed(3)}
                 </Txt>
@@ -99,15 +102,15 @@ export const RecordingCard = ({ recording, onGetSignedUrl, onDelete }: Props) =>
           </View>
         </View>
 
-        <Pressable
+        <Touchable
           onPress={() => onDelete(recording)}
           accessibilityRole="button"
           accessibilityLabel={t("common.delete")}
-          className="w-10 h-10 rounded-full items-center justify-center active:bg-brand-50"
+          className="w-10 h-10 rounded-full items-center justify-center"
         >
-          <Ionicons name="trash-outline" size={20} color="#B42F2F" />
-        </Pressable>
+          <Ionicons name="trash-outline" size={18} color="#FF3B30" />
+        </Touchable>
       </View>
-    </Card>
+    </View>
   );
 };

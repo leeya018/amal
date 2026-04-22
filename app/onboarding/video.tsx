@@ -12,12 +12,12 @@ export default function VideoScreen() {
   return (
     <SafeAreaView edges={["top", "bottom"]} className="flex-1 bg-cream">
       <View className="flex-1 items-center justify-center px-8">
-        <View className="aspect-video w-full rounded-3xl bg-brand-700 items-center justify-center mb-8 overflow-hidden">
-          <View className="w-20 h-20 rounded-full bg-accent-400 items-center justify-center">
-            <Ionicons name="play" size={36} color="#FAF5F0" style={{ marginStart: 4 }} />
+        <View className="aspect-video w-full rounded-[32px] bg-brand-700 items-center justify-center mb-10 overflow-hidden shadow-2xl shadow-black/40">
+          <View className="w-20 h-20 rounded-full bg-white items-center justify-center shadow-xl shadow-black/30">
+            <Ionicons name="play" size={32} color="#1C1C1E" style={{ marginStart: 4 }} />
           </View>
         </View>
-        <Txt variant="title" className="mb-2" style={{ textAlign: "center" }}>
+        <Txt variant="title" className="mb-2 text-ink" style={{ textAlign: "center" }}>
           {t("onboarding.video.title")}
         </Txt>
         <Txt variant="body" tone="muted" style={{ textAlign: "center" }}>

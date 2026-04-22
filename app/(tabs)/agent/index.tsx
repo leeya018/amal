@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Alert, FlatList, KeyboardAvoidingView, Platform, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { Txt } from "@/components/ui/Typography";
 import { ChatBubble } from "@/components/agent/ChatBubble";
@@ -75,8 +76,8 @@ export default function AgentScreen() {
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-cream">
-      <View className="px-6 pt-2 pb-3 border-b border-brand-100/70">
-        <Txt variant="title" className="text-brand-700" style={{ textAlign: "right" }}>
+      <View className="px-6 pt-2 pb-4">
+        <Txt variant="title" className="text-ink" style={{ textAlign: "right" }}>
           {t("agent.title")}
         </Txt>
       </View>
@@ -90,10 +91,13 @@ export default function AgentScreen() {
           ref={listRef}
           data={messages}
           keyExtractor={(m) => m.id}
-          contentContainerStyle={{ padding: 16, paddingBottom: 24 }}
+          contentContainerStyle={{ padding: 16, paddingBottom: 110 }}
           ListHeaderComponent={
             showGreeting ? (
-              <View className="bg-white border border-brand-100 rounded-3xl p-5 mb-4">
+              <View className="bg-white rounded-[32px] p-6 mb-4 shadow-xl shadow-black/5">
+                <View className="w-12 h-12 rounded-full bg-accent-500/10 items-center justify-center mb-3 self-end">
+                  <Ionicons name="sparkles" size={20} color="#007AFF" />
+                </View>
                 <Txt variant="body" className="text-ink" style={{ textAlign: "right" }}>
                   {t("agent.greeting")}
                 </Txt>
@@ -110,7 +114,7 @@ export default function AgentScreen() {
           ListFooterComponent={
             thinking ? (
               <View className="flex-row justify-end mb-2">
-                <View className="bg-white border border-brand-100 rounded-3xl rounded-es-md px-4 py-3">
+                <View className="bg-white rounded-[22px] rounded-es-md px-4 py-3 shadow-md shadow-black/5">
                   <Txt variant="caption" tone="muted">{t("agent.thinking")}</Txt>
                 </View>
               </View>

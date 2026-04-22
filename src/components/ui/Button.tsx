@@ -1,4 +1,5 @@
-import { ActivityIndicator, Pressable, type PressableProps, View } from "react-native";
+import { ActivityIndicator, View, type PressableProps } from "react-native";
+import { Touchable } from "./Touchable";
 import { Txt } from "./Typography";
 
 type Variant = "primary" | "secondary" | "ghost" | "danger";
@@ -7,23 +8,23 @@ type Size    = "md" | "lg";
 // When the bg is dark (primary/danger) we must use `tone="inverse"` rather than a
 // className override, because Txt emits its default tone class in the className
 // string with equal CSS specificity — className order doesn't determine precedence.
-const variantClass: Record<Variant, { bg: string; inverse: boolean; textClass: string; border: string }> = {
-  primary:   { bg: "bg-brand-700",   inverse: true,  textClass: "",                 border: "border-transparent" },
-  secondary: { bg: "bg-cream",       inverse: false, textClass: "text-brand-700",   border: "border-brand-100" },
-  ghost:     { bg: "bg-transparent", inverse: false, textClass: "text-brand-700",   border: "border-transparent" },
-  danger:    { bg: "bg-danger",      inverse: true,  textClass: "",                 border: "border-transparent" },
+const variantClass: Record<Variant, { bg: string; inverse: boolean; textClass: string; shadow: string }> = {
+  primary:   { bg: "bg-brand-700",   inverse: true,  textClass: "",                  shadow: "shadow-lg shadow-black/20" },
+  secondary: { bg: "bg-white",       inverse: false, textClass: "text-brand-700",    shadow: "shadow-md shadow-black/5" },
+  ghost:     { bg: "bg-transparent", inverse: false, textClass: "text-accent-500",   shadow: "" },
+  danger:    { bg: "bg-danger",      inverse: true,  textClass: "",                  shadow: "shadow-lg shadow-danger/30" },
 };
 
 const sizeClass: Record<Size, string> = {
-  md: "px-5 py-3 rounded-2xl",
-  lg: "px-6 py-4 rounded-2xl",
+  md: "px-5 h-12 rounded-[18px]",
+  lg: "px-6 h-14 rounded-[18px]",
 };
 
 type Props = PressableProps & {
-  label:     string;
-  variant?:  Variant;
-  size?:     Size;
-  loading?:  boolean;
+  label:      string;
+  variant?:   Variant;
+  size?:      Size;
+  loading?:   boolean;
   fullWidth?: boolean;
 };
 
@@ -32,15 +33,15 @@ export const Button = ({
 }: Props) => {
   const v = variantClass[variant];
   return (
-    <Pressable
+    <Touchable
       accessibilityRole="button"
       disabled={disabled || loading}
-      className={`${v.bg} ${sizeClass[size]} border ${v.border} ${fullWidth ? "w-full" : ""} ${disabled || loading ? "opacity-60" : ""} active:opacity-80 ${className ?? ""}`}
+      className={`${v.bg} ${sizeClass[size]} ${v.shadow} ${fullWidth ? "w-full" : ""} ${disabled || loading ? "opacity-60" : ""} ${className ?? ""}`}
       {...rest}
     >
-      <View className="flex-row items-center justify-center">
+      <View className="flex-row items-center justify-center h-full">
         {loading ? (
-          <ActivityIndicator color={variant === "primary" || variant === "danger" ? "#FAF5F0" : "#2E1A2E"} />
+          <ActivityIndicator color={v.inverse ? "#FFFFFF" : "#1C1C1E"} />
         ) : (
           <Txt
             tone={v.inverse ? "inverse" : "default"}
@@ -52,6 +53,6 @@ export const Button = ({
           </Txt>
         )}
       </View>
-    </Pressable>
+    </Touchable>
   );
 };

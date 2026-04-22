@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
-import { FlatList, Pressable, View } from "react-native";
+import { FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { Txt } from "@/components/ui/Typography";
+import { Touchable } from "@/components/ui/Touchable";
 import { TaskCard } from "@/components/todos/TaskCard";
 import { TaskForm } from "@/components/todos/TaskForm";
 import { useTodos } from "@/hooks/useTodos";
@@ -36,20 +37,21 @@ export default function TodosScreen() {
     <SafeAreaView edges={["top"]} className="flex-1 bg-cream">
       <View className="px-6 pt-2 pb-3">
         <View className="flex-row-reverse items-center justify-between">
-          <Txt variant="title" className="text-brand-700" style={{ textAlign: "right" }}>
+          <Txt variant="title" className="text-ink" style={{ textAlign: "right" }}>
             {t("todos.title")}
           </Txt>
-          <Pressable
+          <Touchable
             onPress={() => setFormOpen(true)}
             accessibilityRole="button"
             accessibilityLabel={t("todos.newTask")}
-            className="w-11 h-11 rounded-full bg-accent-400 items-center justify-center active:opacity-80"
+            className="w-11 h-11 rounded-full bg-accent-500 items-center justify-center shadow-lg shadow-accent-500/40"
+            scaleTo={0.9}
           >
-            <Ionicons name="add" size={26} color="#FAF5F0" />
-          </Pressable>
+            <Ionicons name="add" size={26} color="#FFFFFF" />
+          </Touchable>
         </View>
 
-        <View className="flex-row-reverse mt-4 gap-2">
+        <View className="flex-row-reverse mt-5 gap-2">
           <FilterChip active={filter === "all"}   label={t("todos.allTasks")} onPress={() => setFilter("all")} />
           <FilterChip active={filter === "today"} label={t("todos.today")}    onPress={() => setFilter("today")} />
         </View>
@@ -60,12 +62,12 @@ export default function TodosScreen() {
         keyExtractor={(t) => t.id}
         refreshing={loading}
         onRefresh={refresh}
-        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 112 }}
         ListEmptyComponent={
           !loading ? (
-            <View className="items-center mt-16 px-8">
-              <View className="w-20 h-20 rounded-full bg-brand-50 items-center justify-center mb-4">
-                <Ionicons name="leaf-outline" size={36} color="#7C3E5F" />
+            <View className="items-center mt-20 px-8">
+              <View className="w-24 h-24 rounded-full bg-white items-center justify-center mb-5 shadow-xl shadow-black/5">
+                <Ionicons name="leaf-outline" size={40} color="#8E8E93" />
               </View>
               <Txt variant="body" tone="muted" style={{ textAlign: "center" }}>
                 {t("todos.empty")}
@@ -86,12 +88,12 @@ export default function TodosScreen() {
 }
 
 const FilterChip = ({ active, label, onPress }: { active: boolean; label: string; onPress: () => void }) => (
-  <Pressable
+  <Touchable
     onPress={onPress}
-    className={`px-4 py-2 rounded-full border ${active ? "bg-brand-700 border-brand-700" : "bg-white border-brand-100"}`}
+    className={`px-4 py-2 rounded-full ${active ? "bg-brand-700 shadow-md shadow-black/20" : "bg-white shadow-md shadow-black/5"}`}
   >
-    <Txt variant="caption" tone={active ? "inverse" : "default"}>
+    <Txt variant="caption" tone={active ? "inverse" : "default"} style={{ fontFamily: "Rubik_500Medium" }}>
       {label}
     </Txt>
-  </Pressable>
+  </Touchable>
 );

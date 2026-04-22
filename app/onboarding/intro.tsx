@@ -12,7 +12,7 @@ export default function IntroScreen() {
   return (
     <SafeAreaView edges={["top", "bottom"]} className="flex-1 bg-cream">
       <View className="px-6 pt-4 pb-2">
-        <Txt variant="title" className="text-brand-700" style={{ textAlign: "right" }}>
+        <Txt variant="title" className="text-ink" style={{ textAlign: "right" }}>
           {t("common.appName")}
         </Txt>
         <Txt variant="caption" tone="muted" style={{ textAlign: "right" }}>

@@ -26,14 +26,18 @@ export const RecordingStatusIndicator = ({ status, elapsedMs, errorMessage }: Pr
           <View className="w-2 h-2 rounded-full bg-danger" />
           <Txt variant="label" tone="danger">{t("sos.recording")}</Txt>
         </View>
-        <Txt variant="display" className="font-bold text-ink" style={{ textAlign: "center", writingDirection: "ltr" }}>
+        <Txt
+          variant="display"
+          className="font-bold text-ink"
+          style={{ textAlign: "center", writingDirection: "ltr", fontVariant: ["tabular-nums"] }}
+        >
           {formatElapsed(elapsedMs)}
         </Txt>
       </View>
     );
   }
   if (status === "saving")  return <Txt variant="heading" tone="muted" style={{ textAlign: "center" }}>{t("sos.saving")}</Txt>;
-  if (status === "saved")   return <Txt variant="heading" tone="accent"  style={{ textAlign: "center" }}>{t("sos.savedTitle")}</Txt>;
-  if (status === "error")   return <Txt variant="label"   tone="danger"  style={{ textAlign: "center" }}>{errorMessage ?? t("errors.generic")}</Txt>;
+  if (status === "saved")   return <Txt variant="heading" tone="accent" style={{ textAlign: "center" }}>{t("sos.savedTitle")}</Txt>;
+  if (status === "error")   return <Txt variant="label"   tone="danger" style={{ textAlign: "center" }}>{errorMessage ?? t("errors.generic")}</Txt>;
   return null;
 };

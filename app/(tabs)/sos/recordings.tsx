@@ -1,10 +1,11 @@
 import { useCallback } from "react";
-import { FlatList, Pressable, View } from "react-native";
+import { FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, Stack, useFocusEffect } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { Txt } from "@/components/ui/Typography";
+import { Touchable } from "@/components/ui/Touchable";
 import { RecordingCard } from "@/components/sos/RecordingCard";
 import { useRecordings } from "@/hooks/useRecordings";
 
@@ -17,18 +18,18 @@ export default function RecordingsScreen() {
   return (
     <SafeAreaView edges={["top"]} className="flex-1 bg-cream">
       <Stack.Screen options={{ headerShown: false }} />
-      <View className="flex-row-reverse items-center justify-between px-6 pt-2 pb-4">
-        <Txt variant="title" className="text-brand-700" style={{ textAlign: "right" }}>
+      <View className="flex-row-reverse items-center justify-between px-6 pt-2 pb-5">
+        <Txt variant="title" className="text-ink" style={{ textAlign: "right" }}>
           {t("sos.recordingsTitle")}
         </Txt>
-        <Pressable
+        <Touchable
           onPress={() => router.back()}
           accessibilityRole="button"
           accessibilityLabel={t("common.back")}
-          className="w-10 h-10 rounded-full items-center justify-center active:bg-brand-50"
+          className="w-11 h-11 rounded-full bg-white items-center justify-center shadow-md shadow-black/5"
         >
-          <Ionicons name="chevron-forward" size={22} color="#2E1A2E" />
-        </Pressable>
+          <Ionicons name="chevron-forward" size={20} color="#1C1C1E" />
+        </Touchable>
       </View>
 
       <FlatList
@@ -36,12 +37,12 @@ export default function RecordingsScreen() {
         keyExtractor={(r) => r.id}
         refreshing={loading}
         onRefresh={refresh}
-        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 32 }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 112 }}
         ListEmptyComponent={
           !loading ? (
-            <View className="items-center mt-16 px-8">
-              <View className="w-20 h-20 rounded-full bg-brand-50 items-center justify-center mb-4">
-                <Ionicons name="mic-off-outline" size={36} color="#7C3E5F" />
+            <View className="items-center mt-20 px-8">
+              <View className="w-24 h-24 rounded-full bg-white items-center justify-center mb-5 shadow-xl shadow-black/5">
+                <Ionicons name="mic-off-outline" size={40} color="#8E8E93" />
               </View>
               <Txt variant="body" tone="muted" style={{ textAlign: "center" }}>
                 {t("sos.empty")}

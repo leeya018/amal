@@ -1,8 +1,29 @@
+import { Platform, StyleSheet, View } from "react-native";
 import { Redirect, Tabs } from "expo-router";
+import { BlurView } from "expo-blur";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { RecordingProvider } from "@/contexts/RecordingContext";
 import { useAuth } from "@/contexts/AuthContext";
+
+// Translucent glass tab bar — the BlurView sits behind the tabs and the
+// tabBarStyle is made transparent so the blur comes through. On Android the
+// blur is approximate; the translucent white keeps the surface legible.
+const GlassTabBarBackground = () => (
+  <View style={StyleSheet.absoluteFill}>
+    <BlurView
+      intensity={Platform.OS === "ios" ? 90 : 100}
+      tint="light"
+      style={StyleSheet.absoluteFill}
+    />
+    <View
+      style={[
+        StyleSheet.absoluteFill,
+        { backgroundColor: Platform.OS === "ios" ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.88)" },
+      ]}
+    />
+  </View>
+);
 
 export default function TabsLayout() {
   const { t } = useTranslation();
@@ -19,18 +40,21 @@ export default function TabsLayout() {
       <Tabs
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor:   "#2E1A2E",
-          tabBarInactiveTintColor: "#A89AA2",
+          tabBarActiveTintColor:   "#007AFF",
+          tabBarInactiveTintColor: "#8E8E93",
+          tabBarBackground: GlassTabBarBackground,
           tabBarStyle: {
-            backgroundColor: "#FFFCF9",
-            borderTopColor:  "#E8D5E0",
-            height: 72,
-            paddingTop: 8,
-            paddingBottom: 16,
+            position: "absolute",
+            backgroundColor: "transparent",
+            borderTopWidth: 0,
+            elevation: 0,
+            height: 84,
+            paddingTop: 10,
+            paddingBottom: 24,
           },
           tabBarLabelStyle: {
             fontFamily: "Rubik_500Medium",
-            fontSize: 12,
+            fontSize: 11,
           },
         }}
       >

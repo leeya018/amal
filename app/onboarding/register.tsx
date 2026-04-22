@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { KeyboardAvoidingView, Platform, Pressable, View } from "react-native";
+import { KeyboardAvoidingView, Platform, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link, router } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Txt } from "@/components/ui/Typography";
+import { Touchable } from "@/components/ui/Touchable";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function RegisterScreen() {
@@ -36,8 +37,8 @@ export default function RegisterScreen() {
         className="flex-1"
       >
         <View className="flex-1 justify-center px-6 gap-4">
-          <View className="mb-2">
-            <Txt variant="display" className="text-brand-700 mb-1" style={{ textAlign: "right" }}>
+          <View className="mb-4">
+            <Txt variant="display" className="text-ink mb-1.5" style={{ textAlign: "right" }}>
               {t("onboarding.register.title")}
             </Txt>
             <Txt variant="body" tone="muted" style={{ textAlign: "right" }}>
@@ -78,12 +79,14 @@ export default function RegisterScreen() {
             onPress={submit}
           />
 
-          <View className="flex-row-reverse justify-center items-center gap-1 mt-2">
+          <View className="flex-row-reverse justify-center items-center gap-1 mt-3">
             <Txt variant="caption" tone="muted">{t("onboarding.register.hasAccount")}</Txt>
             <Link href="/onboarding/login" asChild>
-              <Pressable>
-                <Txt variant="caption" tone="accent">{t("onboarding.register.goLogin")}</Txt>
-              </Pressable>
+              <Touchable>
+                <Txt variant="caption" tone="accent" style={{ fontFamily: "Rubik_500Medium" }}>
+                  {t("onboarding.register.goLogin")}
+                </Txt>
+              </Touchable>
             </Link>
           </View>
         </View>

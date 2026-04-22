@@ -7,8 +7,8 @@ import { Txt } from "@/components/ui/Typography";
 const { width: SCREEN_W } = Dimensions.get("window");
 
 type Slide = {
-  key:  string;
-  icon: keyof typeof Ionicons.glyphMap;
+  key:      string;
+  icon:     keyof typeof Ionicons.glyphMap;
   titleKey: string;
   bodyKey:  string;
 };
@@ -49,10 +49,10 @@ export const IntroCarousel = ({ onIndexChange }: Props) => {
         scrollEventThrottle={16}
         renderItem={({ item }) => (
           <View style={{ width: SCREEN_W }} className="items-center justify-center px-8">
-            <View className="w-28 h-28 rounded-full bg-accent-100 items-center justify-center mb-8">
-              <Ionicons name={item.icon} size={60} color="#7C3E5F" />
+            <View className="w-32 h-32 rounded-[36px] bg-white items-center justify-center mb-10 shadow-2xl shadow-accent-500/20">
+              <Ionicons name={item.icon} size={64} color="#007AFF" />
             </View>
-            <Txt variant="title" className="mb-3" style={{ textAlign: "center" }}>
+            <Txt variant="title" className="mb-3 text-ink" style={{ textAlign: "center" }}>
               {t(item.titleKey)}
             </Txt>
             <Txt variant="body" tone="muted" style={{ textAlign: "center" }}>
@@ -61,11 +61,11 @@ export const IntroCarousel = ({ onIndexChange }: Props) => {
           </View>
         )}
       />
-      <View className="flex-row justify-center gap-2 pb-4">
+      <View className="flex-row justify-center gap-2 pb-6">
         {SLIDES.map((_, i) => (
           <View
             key={i}
-            className={`h-2 rounded-full ${i === index ? "w-8 bg-brand-700" : "w-2 bg-brand-100"}`}
+            className={`h-2 rounded-full ${i === index ? "w-8 bg-accent-500" : "w-2 bg-ink-faint/40"}`}
           />
         ))}
       </View>
