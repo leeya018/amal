@@ -100,3 +100,6 @@ UI primitives in [src/components/ui/](src/components/ui/) (`Button`, `Card`, `In
 ## Security note for maintainers
 
 [.mcp.json](.mcp.json) currently contains a hard-coded GitHub PAT passed via `-e GITHUB_PERSONAL_ACCESS_TOKEN=…` on the command line. If you rotate it, do so here and in the GitHub account — consider moving it to an untracked env var instead.
+
+
+Always follow the UI/UX rules defined in ./skills/apple-design.md for every component you create.
